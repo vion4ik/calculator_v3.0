@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boost CS2</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+
+  <div class="top-bar">
+    <div class="switch-group" id="langSwitch">
+      <button class="switch-btn active" data-lang="ru">RU</button>
+      <button class="switch-btn" data-lang="en">EN</button>
+    </div>
+
+    <a href="info.html" class="btn-info" id="infoBtn">ℹ️ Информация</a>
+
+    <div class="switch-group" id="currencySwitch">
+      <button class="switch-btn active" data-currency="RUB">₽</button>
+      <button class="switch-btn" data-currency="USD">$</button>
+    </div>
+  </div>
+
+  <h1 id="titleText">💎 BOOST CS2</h1>
+
+  <div class="form-group">
+    <label id="boostTypeLabel">Тип буста</label>
+    <select id="boostType">
+      <option value="solo" data-ru="Соло буст (передача)" data-en="Solo boost (self-play)">Соло буст (передача)</option>
+      <option value="party" data-ru="Пати буст" data-en="Party boost">Пати буст</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label id="currentLabel">Начальное ELO</label>
+    <input type="number" id="currentElo" value="900" placeholder="900">
+  </div>
+
+  <div class="form-group">
+    <label id="targetLabel">Конечное ELO</label>
+    <input type="number" id="targetInput" value="" min="0" max="3000" step="1" placeholder="Введите ELO">
+    <small class="hint" id="targetHint">📌 Введите конечный ELO (макс. 3000)</small>
+  </div>
+
+  <div class="form-group">
+    <label id="markupLabel">Наценка (%)</label>
+    <input type="number" id="markup" value="0" min="0" step="1" placeholder="0">
+  </div>
+
+  <button class="btn-calc" id="calcBtn" onclick="calculate()">💰 Рассчитать цену</button>
+
+  <div id="result" class="result-box">
+    <div class="placeholder">Введите данные и нажмите «Рассчитать»</div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
