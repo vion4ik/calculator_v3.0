@@ -1,5 +1,11 @@
 // ========== НАСТРОЙКИ ==========
-const USD_RATE = 85;
+const USD_RATE = 85; // сколько рублей в 1 долларе
+
+// Наценка по региону (в процентах)
+const regionMarkup = {
+  RU: 0,
+  EU: 15
+};
 
 // ========== ТАБЛИЦЫ ЦЕН (за 25 ELO) ==========
 const soloPrices = [
@@ -43,6 +49,7 @@ const partyPrices = [
 // ========== СОСТОЯНИЕ ==========
 let currentLang = 'ru';
 let currentCurrency = 'RUB';
+let currentRegion = 'RU';
 
 // ========== ПЕРЕВОДЫ ==========
 const translations = {
@@ -52,7 +59,8 @@ const translations = {
     currentElo: 'Начальное ELO',
     targetElo: 'Конечное ELO',
     targetHint: '📌 Введите конечный ELO (макс. 3000)',
-    markup: 'Наценка (%)',
+    region: 'Регион',
+    regionWarning: '⚠️ Для EU-региона цена увеличена на 15%',
     calcBtn: '💰 Рассчитать цену',
     placeholder: 'Введите данные и нажмите «Рассчитать»',
     info: 'ℹ️ Информация',
@@ -69,7 +77,8 @@ const translations = {
     currentElo: 'Current ELO',
     targetElo: 'Target ELO',
     targetHint: '📌 Enter target ELO (max 3000)',
-    markup: 'Markup (%)',
+    region: 'Region',
+    regionWarning: '⚠️ EU region adds 15% to the price',
     calcBtn: '💰 Calculate price',
     placeholder: 'Enter values and click "Calculate"',
     info: 'ℹ️ Info',
@@ -133,7 +142,7 @@ function updateFields() {
 function applyLanguage() {
   document.getElementById('titleText').textContent = t('title');
   document.getElementById('boostTypeLabel').textContent = t('boostType');
-  document.getElementById('markupLabel').textContent = t('markup');
+  document.getElementById('regionLabel').textContent = t('region');
   document.getElementById('calcBtn').textContent = t('calcBtn');
 
   const infoBtn = document.getElementById('infoBtn');
@@ -143,6 +152,9 @@ function applyLanguage() {
   options.forEach(opt => {
     opt.textContent = opt.getAttribute('data-' + currentLang);
   });
+
+  const warning = document.getElementById('euWarning');
+  if (warning) warning.textContent = t('regionWarning');
 
   document.documentElement.lang = currentLang;
   document.title = 'Boost CS2';
@@ -168,7 +180,7 @@ function calculate() {
   const boostType = document.getElementById('boostType').value;
   const currentElo = parseFloat(document.getElementById('currentElo').value);
   const targetValue = parseFloat(document.getElementById('targetInput').value);
-  const markup = parseFloat(document.getElementById('markup').value) || 0;
+  const markup = regionMarkup[currentRegion] || 0;
   const resultDiv = document.getElementById('result');
 
   if (isNaN(currentElo) || isNaN(targetValue)) {
@@ -210,6 +222,21 @@ document.querySelectorAll('#currencySwitch .switch-btn').forEach(function (btn) 
   });
 });
 
+// ========== ПЕРЕКЛЮЧАТЕЛЬ РЕГИОНА ==========
+document.querySelectorAll('#regionSwitch .switch-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('#regionSwitch .switch-btn').forEach(function (b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    currentRegion = btn.getAttribute('data-region');
+
+    const warning = document.getElementById('euWarning');
+    if (warning) warning.style.display = currentRegion === 'EU' ? 'block' : 'none';
+
+    const resultDiv = document.getElementById('result');
+    if (resultDiv && resultDiv.querySelector('.price')) calculate();
+  });
+});
+
 // ========== ENTER НА ПОЛЯХ ==========
 document.querySelectorAll('input').forEach(function (input) {
   input.addEventListener('keypress', function (e) {
@@ -222,5 +249,8 @@ window.onload = function () {
   if (document.getElementById('boostType')) {
     applyLanguage();
     updateFields();
+    // По умолчанию — RU, предупреждение скрыто
+    const warning = document.getElementById('euWarning');
+    if (warning) warning.style.display = 'none';
   }
 };
