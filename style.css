@@ -55,16 +55,14 @@ body {
   color: #fff;
 }
 
-/* Переключатель региона — на всю ширину */
+/* Переключатель региона — компактный */
 .region-switch {
-  width: 100%;
-  display: flex;
+  display: inline-flex;
+  width: auto;
 }
 .region-switch .switch-btn {
-  flex: 1;
-  padding: 12px 14px;
+  padding: 8px 18px;
   font-size: 13px;
-  text-align: center;
 }
 
 .btn-info {
