@@ -55,6 +55,18 @@ body {
   color: #fff;
 }
 
+/* Переключатель региона — на всю ширину */
+.region-switch {
+  width: 100%;
+  display: flex;
+}
+.region-switch .switch-btn {
+  flex: 1;
+  padding: 12px 14px;
+  font-size: 13px;
+  text-align: center;
+}
+
 .btn-info {
   padding: 7px 14px;
   background: #0d0d0d;
@@ -126,6 +138,10 @@ h1 {
   color: #555;
   margin-top: 5px;
 }
+.form-group .hint-eu {
+  color: #ff8c00;
+  font-weight: 600;
+}
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -177,6 +193,7 @@ select option { background: #1a1a1a; color: #e0e0e0; }
   -webkit-text-fill-color: transparent;
 }
 
+/* ===== Стили страницы «Информация» ===== */
 .info-container { max-width: 620px; }
 .info-container .top-bar {
   display: flex;
@@ -226,6 +243,7 @@ select option { background: #1a1a1a; color: #e0e0e0; }
   color: #e8e8e8;
   font-weight: 700;
 }
+
 /* Список цен */
 .info-section ul.price-list {
   list-style: none;
